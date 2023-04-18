@@ -30,6 +30,11 @@ form.addEventListener('submit', (event) => {
     return;
   }
 
+  if (step < 0 || delay < 0 || amount <= 0) {
+    Notiflix.Notify.failure('Step and delay should be positive and amount should be greater than zero');
+    return;
+  }
+
   for (let i = 1; i <= amount; i++) {
     createPromise(i, delay + (i - 1) * step)
       .then(({ position, delay }) => {

@@ -23,9 +23,8 @@ const options = {
       Notiflix.Notify.failure("Please choose a date in the future");
       startBtn.disabled = true;
     } else {
-        startBtn.disabled = false;
+      startBtn.disabled = false;
     }
-    console.log(selectedDates[0]);
   },
 };
 
@@ -34,24 +33,26 @@ flatpickr("#datetime-picker", options);
 startBtn.addEventListener('click', onStartBtn);
 
 function onStartBtn () {
-    const selectedDate = new Date(datetimePicker.value);
-    const timerInterval = setInterval(updateTimer, 1000);
-    startBtn.disabled = true;
+  const selectedDate = new Date(datetimePicker.value);
+  const timerInterval = setInterval(updateTimer, 1000);
+  datetimePicker.disabled = true;
+  startBtn.disabled = true;
  
-    function updateTimer() {
-        const currentDate = new Date();
-        const timeDifference = selectedDate - currentDate;
-        if (timeDifference <= 0) {
-            clearInterval(timerInterval);
-            return;
-        }
-        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-        daysElement.textContent = String(days).padStart(2, '0');
-        hoursElement.textContent = String(hours).padStart(2, '0');
-        minutesElement.textContent = String(minutes).padStart(2, '0');
-        secondsElement.textContent = String(seconds).padStart(2, '0');
+  function updateTimer() {
+    const currentDate = new Date();
+    const timeDifference = selectedDate - currentDate;
+    if (timeDifference <= 0) {
+      clearInterval(timerInterval);
+      datetimePicker.disabled = false;
+      return;
     }
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    daysElement.textContent = String(days).padStart(2, '0');
+    hoursElement.textContent = String(hours).padStart(2, '0');
+    minutesElement.textContent = String(minutes).padStart(2, '0');
+    secondsElement.textContent = String(seconds).padStart(2, '0');
+  }
 }
